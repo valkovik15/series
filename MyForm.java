@@ -24,35 +24,36 @@ public class MyForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println(chooseSeriesType.getSelectedIndex());
-                Main.type = chooseSeriesType.getSelectedIndex();
+                Demo.Ser.changeType(chooseSeriesType.getSelectedIndex());
                 update();
             }
         });
         a0Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.a = Integer.parseInt(a0Field.getText());
+                Demo.Ser.getObj().setA0(Integer.parseInt(a0Field.getText()));
                 update();
             }
         });
         qButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.q = Double.parseDouble(qField.getText());
+                System.out.println(Demo.Ser.getObj());
+                Demo.Ser.getObj().setQ(Double.parseDouble(qField.getText()));
                 update();
             }
         });
         nButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.n = Integer.parseInt(nField.getText());
+                Demo.Ser.getObj().setN(Integer.parseInt(nField.getText()));
                 update();
             }
         });
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.series[Main.type].writeToFile(Main.n, fileField.getText());
+                Demo.Ser.getObj().writeToFile(Demo.Ser.getObj().getN(), fileField.getText());
             }
         });
     }
@@ -61,11 +62,10 @@ public class MyForm extends JFrame {
     public void update() {
         DefaultListModel temp = (DefaultListModel) listSeries.getModel();
         temp.clear();
-        Main.init();
-        for (int i = 0; i < Main.n; i++) {
-            temp.addElement(Main.series[Main.type].countJ(i));
+        for (int i = 0; i < Demo.Ser.getObj().getN(); i++) {
+            temp.addElement(Demo.Ser.getObj().countJ(i));
         }
-        temp.addElement("Сумма: " + Main.series[Main.type].countSum(Main.n));
+        temp.addElement("Сумма: " + Demo.Ser.getObj().countSum(Demo.Ser.getObj().getN()));
 
     }
 
