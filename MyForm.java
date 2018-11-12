@@ -17,13 +17,12 @@ public class MyForm extends JFrame {
     private JButton saveButton;
     private JTextArea series;
 
-    public MyForm() {
+    public MyForm(Model model) {
         $$$setupUI$$$();
         this.getContentPane().add(Panel);
         chooseSeriesType.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println(chooseSeriesType.getSelectedIndex());
                 Demo.Ser.changeType(chooseSeriesType.getSelectedIndex());
                 update();
             }
@@ -31,29 +30,32 @@ public class MyForm extends JFrame {
         a0Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getObj().setA0(Integer.parseInt(a0Field.getText()));
+                Demo.Ser.getData().setA0(Integer.parseInt(a0Field.getText()));
                 update();
             }
         });
         qButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println(Demo.Ser.getObj());
-                Demo.Ser.getObj().setQ(Double.parseDouble(qField.getText()));
+                Demo.Ser.getData().setQ(Double.parseDouble(qField.getText()));
                 update();
             }
         });
         nButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getObj().setN(Integer.parseInt(nField.getText()));
+                Demo.Ser.getData().setN(Integer.parseInt(nField.getText()));
                 update();
             }
         });
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getObj().writeToFile(Demo.Ser.getObj().getN(), fileField.getText());
+                try {
+                    Demo.Ser.getData().writeToFile(fileField.getText());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
             }
         });
     }
@@ -62,10 +64,10 @@ public class MyForm extends JFrame {
     public void update() {
         DefaultListModel temp = (DefaultListModel) listSeries.getModel();
         temp.clear();
-        for (int i = 0; i < Demo.Ser.getObj().getN(); i++) {
-            temp.addElement(Demo.Ser.getObj().countJ(i));
+        for (int i = 0; i < Demo.Ser.getData().getN(); i++) {
+            temp.addElement(Demo.Ser.getData().countJ(i));
         }
-        temp.addElement("Сумма: " + Demo.Ser.getObj().countSum(Demo.Ser.getObj().getN()));
+        temp.addElement("Сумма: " + Demo.Ser.getData().countSum(Demo.Ser.getData().getN()));
 
     }
 
@@ -104,7 +106,7 @@ public class MyForm extends JFrame {
         qButton.setText("q");
         Panel.add(qButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         chooseSeriesType = new JComboBox();
-        chooseSeriesType.setEditable(true);
+        chooseSeriesType.setEditable(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Арифметическая");
         defaultComboBoxModel1.addElement("Геометрическая");
