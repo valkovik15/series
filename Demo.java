@@ -8,7 +8,7 @@ import java.io.*;
 
 
         public static void main(String[] args) {
-            Model Ser=new Model;
+            Model Ser=new Model();
             MyForm f = new MyForm(Ser);
             f.pack();
             f.setSize(new Dimension(500, 500));

@@ -16,35 +16,37 @@ public class MyForm extends JFrame {
     private JList listSeries;
     private JButton saveButton;
     private JTextArea series;
+    private Model Data;
 
     public MyForm(Model model) {
         $$$setupUI$$$();
+        Data = model;
         this.getContentPane().add(Panel);
         chooseSeriesType.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.changeType(chooseSeriesType.getSelectedIndex());
+                Data.changeType(chooseSeriesType.getSelectedIndex());
                 update();
             }
         });
         a0Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getData().setA0(Integer.parseInt(a0Field.getText()));
+                Data.getData().setA0(Integer.parseInt(a0Field.getText()));
                 update();
             }
         });
         qButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getData().setQ(Double.parseDouble(qField.getText()));
+                Data.getData().setQ(Double.parseDouble(qField.getText()));
                 update();
             }
         });
         nButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Demo.Ser.getData().setN(Integer.parseInt(nField.getText()));
+                Data.getData().setN(Integer.parseInt(nField.getText()));
                 update();
             }
         });
@@ -52,7 +54,7 @@ public class MyForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    Demo.Ser.getData().writeToFile(fileField.getText());
+                    Data.getData().writeToFile(fileField.getText());
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
@@ -64,10 +66,10 @@ public class MyForm extends JFrame {
     public void update() {
         DefaultListModel temp = (DefaultListModel) listSeries.getModel();
         temp.clear();
-        for (int i = 0; i < Demo.Ser.getData().getN(); i++) {
-            temp.addElement(Demo.Ser.getData().countJ(i));
+        for (int i = 0; i < Data.getData().getN(); i++) {
+            temp.addElement(Data.getData().countJ(i));
         }
-        temp.addElement("Сумма: " + Demo.Ser.getData().countSum(Demo.Ser.getData().getN()));
+        temp.addElement("Сумма: " + Data.getData().countSum(Data.getData().getN()));
 
     }
 
